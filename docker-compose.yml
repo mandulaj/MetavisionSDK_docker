@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    image: metavision
+    image: registry.git.ee.ethz.ch/pbl/research/armasuisse/armasuisse-2023/metavisionsdk_docker/metavision22:latest
     build: .
     environment:
       - DISPLAY=${DISPLAY}
@@ -11,3 +11,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
     network_mode: host
     privileged: true
+    ulimits:
+      nofile:
+        soft: "1024"
+        hard: "65536"
