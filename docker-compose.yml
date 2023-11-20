@@ -2,8 +2,10 @@ version: "3"
 
 services:
   app:
-    image: registry.git.ee.ethz.ch/pbl/research/armasuisse/armasuisse-2023/metavisionsdk_docker/metavision22:latest
-    build: .
+    image: metavision22_${USER}:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
     environment:
       - DISPLAY=${DISPLAY}
     volumes:
