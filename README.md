@@ -6,7 +6,7 @@ Includes the full [Metavision SDK](https://docs.prophesee.ai/stable/installation
 
 ![Metavision Studio](https://docs.prophesee.ai/stable/_images/metavision_studio_hand_spinner.png)
 
-## Usage
+## Build User image
 
 1. Make sure to have the following variables exported (eg. by placing them in your `.bashrc`):
 ```
@@ -30,6 +30,16 @@ cd MetavisionSDK-docker
 ```bash
 docker compose build metavisionsdk
 ```
+
+## Usage
+```bash
+# Run metavision_studio
+docker run -it --privileged -e DISPLAY -v /dev/bus/usb:/deb/bus/usb -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /home/${USER}/.Xauthority:/home/${USER}/.Xauthority -v $(pwd):/home/${USER}/pwd --rm --ipc=host --net=host metavisionsdk22_${USER}:latest /bin/bash -c "metavision_studio; while /usr/bin/pgrep metavision >/dev/null; do sleep 1; done"
+# Run a Bash in the container
+docker run -it --privileged -e DISPLAY -v /dev/bus/usb:/deb/bus/usb -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /home/${USER}/.Xauthority:/home/${USER}/.Xauthority -v $(pwd):/home/${USER}/pwd --rm --ipc=host --net=host metavisionsdk22_${USER}:latest bash
+```
+
+
 
 ## Build base image from scratch
 Alternatively, you can build the base image from scratch. However for this, you have to collect your own `metavision22.list` from the Prophesee website.  Sign up at [https://www.prophesee.ai/metavision-intelligence-sdk-download/](https://www.prophesee.ai/metavision-intelligence-sdk-download/) and save the `metavision.list` to the root of the repository directory.
