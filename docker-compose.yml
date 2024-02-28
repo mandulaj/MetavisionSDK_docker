@@ -1,11 +1,24 @@
-version: "3"
+version: "3.2"
 
 services:
-  app:
-    image: metavision22_${USER}:latest
+  base:
+    image: registry.git.ee.ethz.ch/pbl/research/event-camera/docker/metavisionsdk-docker/metavisionsdk22:latest
     build: 
       context: .
+      dockerfile: Dockerfile_base
+    profiles:
+      - base_image
+
+  metavisionsdk:
+    image: metavisionsdk22_${USER}:latest
+    build:
+      context: .
       dockerfile: Dockerfile
+      args:
+        - USERNAME=${USER}
+        - USER_ID=${USER_ID}
+        - GROUP_ID=${GROUP_ID}
+        - PASSWORD=${PASSWORD}
     environment:
       - DISPLAY=${DISPLAY}
     volumes:

@@ -2,14 +2,15 @@
 #
 #
 
-FROM registry.git.ee.ethz.ch/pbl/research/armasuisse/armasuisse-2023/metavisionsdk_docker/metavision22:latest
-
-ARG username
-ARG password
-ARG user_id
+FROM registry.git.ee.ethz.ch/pbl/research/event-camera/docker/metavisionsdk-docker/metavisionsdk22:latest
 
 
-RUN useradd -u $user_id -ms /bin/bash $username && usermod -aG sudo $username && echo "$username:$password" | chpasswd
+ARG USERNAME
+ARG USER_ID
+ARG GROUP_ID
+ARG PASSWORD
 
-USER $username
-WORKDIR /home/$username
+RUN groupadd -g ${GROUP_ID} ${USERNAME} && useradd -u ${USER_ID} -g ${GROUP_ID} -ms /bin/bash ${USERNAME} && usermod -aG sudo ${USERNAME} && echo "${USERNAME}:${PASSWORD}" | chpasswd
+
+USER ${USERNAME}
+WORKDIR /home/${USERNAME}
