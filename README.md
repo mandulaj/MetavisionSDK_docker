@@ -19,7 +19,7 @@ export GROUP_ID=`id -g`
 ```bash
 docker login registry.git.ee.ethz.ch
 ```
-User your GitLab credentials. If you set up 2FA, you will have to create a [Personal Access Token](https://git.ee.ethz.ch/-/user_settings/personal_access_tokens).
+Use your GitLab credentials. If you set up 2FA, you will have to create a [Personal Access Token](https://git.ee.ethz.ch/-/user_settings/personal_access_tokens).
 
 3. Clone this repo:
 ```bash
@@ -32,7 +32,7 @@ cd MetavisionSDK-docker
 ./build_user.sh
 ```
 
-This pull the base image from the registry and builds a derived image with a user that has same `$USERNAME` `$USER_ID` and `$GROUP_ID` as the host user.
+This pulls the base image from the registry and builds a derived image with a user that has the same `$USERNAME`, `$USER_ID` and `$GROUP_ID` as the host user.
 
 You can also do this using:
 
