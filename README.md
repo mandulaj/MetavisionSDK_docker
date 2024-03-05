@@ -8,7 +8,7 @@ Includes the full [Metavision SDK](https://docs.prophesee.ai/stable/installation
 
 ## Build User image
 
-1. Make sure to have the following variables exported (eg. by placing them in your `.bashrc`):
+1. Make sure to have the following variables exported (eg. by placing them in your `.zshrc` or `.bashrc`):
 ```
 # This is your host user ID and group ID. The derived docker image user will be created with same ID in order to have same Read/Write permissions
 export USER_ID=`id -u`   
@@ -19,6 +19,7 @@ export GROUP_ID=`id -g`
 ```bash
 docker login registry.git.ee.ethz.ch
 ```
+User your GitLab credentials. If you set up 2FA, you will have to create a [Personal Access Token](https://git.ee.ethz.ch/-/user_settings/personal_access_tokens).
 
 3. Clone this repo:
 ```bash
@@ -28,17 +29,45 @@ cd MetavisionSDK-docker
 
 4. Build Docker User Image:
 ```bash
+./build_user.sh
+```
+
+This pull the base image from the registry and builds a derived image with a user that has same `$USERNAME` `$USER_ID` and `$GROUP_ID` as the host user.
+
+You can also do this using:
+
+```bash
 docker compose build metavisionsdk
 ```
 
+
+
+
 ## Usage
+
+The Metavision container requires quite a few permissions to run. You can either launch it using docker compose:
+```bash
+docker compose run metavisionsdk
+```
+
+Or run it explicitly using `docker run`. Not that in order to get GUI, you have to run in `--privileged` mode, share the X11 authority files, export the `$DISPLAY` variable and allow sufficient shared memory with `--shm-size '2gb'`.
+
+
 ```bash
 # Run metavision_studio
-docker run -it --privileged -e DISPLAY -v /dev/bus/usb:/deb/bus/usb -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /home/${USER}/.Xauthority:/home/${USER}/.Xauthority -v $(pwd):/home/${USER}/pwd --rm --ipc=host --net=host metavisionsdk22_${USER}:latest /bin/bash -c "metavision_studio; while /usr/bin/pgrep metavision >/dev/null; do sleep 1; done"
+docker run -it --privileged -e DISPLAY -v /dev/bus/usb:/deb/bus/usb -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /home/${USER}/.Xauthority:/home/${USER}/.Xauthority -v $(pwd):/home/${USER}/pwd --rm --ipc=host  --shm-size 2gb --net=host metavisionsdk22_${USER}:latest /bin/bash -c "metavision_studio; while /usr/bin/pgrep metavision >/dev/null; do sleep 1; done"
 # Run a Bash in the container
 docker run -it --privileged -e DISPLAY -v /dev/bus/usb:/deb/bus/usb -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /home/${USER}/.Xauthority:/home/${USER}/.Xauthority -v $(pwd):/home/${USER}/pwd --rm --ipc=host --net=host metavisionsdk22_${USER}:latest bash
 ```
 
+### Using USB cameras
+
+In oder to use the USB cameras, the `/dev/bus/usb` has to be mounted and the camera device file has to have RW permissions for all users. Inside of the container, this can be done using the helper script
+```bash
+/scripts/chmod.sh # Finds all EVK4 cameras and changes permissions to 666. Will prompt for sudo password ("password")
+```
+
+You may have to start the container after connecting the USB cameras.
 
 
 ## Build base image from scratch
