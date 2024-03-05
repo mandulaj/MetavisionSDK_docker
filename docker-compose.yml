@@ -22,9 +22,12 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
     volumes:
+      - /home/${USER}/.Xauthority:/home/${USER}/.Xauthority:ro
       - /dev/bus/usb:/dev/bus/usb
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - "./config:/home/$USER/.config/Metavision\ Studio"
     network_mode: host
+    shm_size: '2gb'
     privileged: true
     ulimits:
       nofile:
