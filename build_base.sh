@@ -1,5 +1,12 @@
 #!/bin/bash
 
-docker build -t registry.git.ee.ethz.ch/pbl/research/armasuisse/armasuisse-2023/metavisionsdk_docker/metavision22:latest -f Dockerfile_base .
+if [ ! -f ./metavision22.list ]; then
+	echo "Please download the metavision22.list file"
+	exit 1;
+fi
 
-docker push registry.git.ee.ethz.ch/pbl/research/armasuisse/armasuisse-2023/metavisionsdk_docker/metavision22:latest
+
+
+docker compose build base
+
+docker compose push base

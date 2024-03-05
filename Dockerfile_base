@@ -13,7 +13,7 @@ ENV CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda
 
 ADD metavision22.list /etc/apt/sources.list.d
 
-RUN apt update -y && apt upgrade -y && apt install -y ca-certificates git vim curl wget cmake autoconf rsync automake libcanberra-gtk-module mesa-utils ffmpeg && apt clean
+RUN apt update -y && apt upgrade -y && apt install -y ca-certificates git vim curl wget cmake autoconf rsync automake libcanberra-gtk-module mesa-utils ffmpeg usbutils && apt clean
 
 RUN apt update -y && apt install -y python3-pip python3-tk python3.10-dev sudo libboost-program-options-dev libeigen3-dev build-essential parallel && apt clean
 
@@ -23,3 +23,6 @@ RUN python3 -m pip install --no-cache-dir "opencv-python>=4.5.5.64" "sk-video==1
 
 
 RUN apt update -y && apt -y install metavision-sdk && apt clean
+
+
+COPY ./scripts /scripts
