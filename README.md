@@ -6,6 +6,26 @@ Includes the full [Metavision SDK](https://docs.prophesee.ai/stable/installation
 
 ![Metavision Studio](https://docs.prophesee.ai/stable/_images/metavision_studio_hand_spinner.png)
 
+## Add user to the docker group
+You can check if your user is in the docker group with
+```bash
+grep /etc/group -e "docker"
+```
+If your output looks something like this:
+```bash
+docker:x:999:
+```
+where your username is not mentioned, then you need to add your user to the docker group.
+(Also, if you can only call docker commands with sudo, you probably need to add yourself to the docker group.)
+
+To add your user to the docker group type the following in a terminal:
+
+```bash
+sudo usermod -aG docker <your_username>
+```
+
+To make this changes effective you have to log in and out of your account and in some cases you might even have to reboot your computer.
+
 ## Build User image
 
 1. Make sure to have the following variables exported (eg. by placing them in your `.zshrc` or `.bashrc`):
