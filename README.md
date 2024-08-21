@@ -65,12 +65,19 @@ docker compose build metavisionsdk
 
 ## Usage
 
-The Metavision container requires quite a few permissions to run. You can either launch it using docker compose:
+Strat Metavision Studio with:
+```bash
+./metavision_metavision.sh
+```
+
+This also creates the required config files and sets all permisions.
+
+You can also launch it directly using docker compose:
 ```bash
 docker compose run metavisionsdk
 ```
 
-Or run it explicitly using `docker run`. Not that in order to get GUI, you have to run in `--privileged` mode, share the X11 authority files, export the `$DISPLAY` variable and allow sufficient shared memory with `--shm-size '2gb'`.
+Or run it explicitly using `docker run`. Note that in order to get GUI, you have to run in `--privileged` mode, share the X11 authority files, export the `$DISPLAY` variable and allow sufficient shared memory with `--shm-size '2gb'`.
 
 
 ```bash
