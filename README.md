@@ -67,7 +67,7 @@ docker compose build metavisionsdk
 
 Strat Metavision Studio with:
 ```bash
-./metavision_metavision.sh
+./metavision_studio.sh
 ```
 
 This also creates the required config files and sets all permisions.
