@@ -9,13 +9,9 @@ Includes the full [Metavision SDK](https://docs.prophesee.ai/stable/installation
 ## Add user to the docker group
 You can check if your user is in the docker group with
 ```bash
-grep /etc/group -e "docker"
+id | grep docker
 ```
-If your output looks something like this:
-```bash
-docker:x:999:
-```
-where your username is not mentioned, then you need to add your user to the docker group.
+If nothing is printed, then you need to add your user to the docker group.
 (Also, if you can only call docker commands with sudo, you probably need to add yourself to the docker group.)
 
 To add your user to the docker group type the following in a terminal:
@@ -31,11 +27,11 @@ To make this changes effective you have to log in and out of your account and in
 1. Make sure to have the following variables exported (eg. by placing them in your `.zshrc` or `.bashrc`):
 ```
 # This is your host user ID and group ID. The derived docker image user will be created with same ID in order to have same Read/Write permissions
-export USER_ID=`id -u`   
+export USER_ID=`id -u`
 export GROUP_ID=`id -g`
 ```
 
-2. Log into the PBL Docker Registry: 
+2. Log into the PBL Docker Registry:
 ```bash
 docker login registry.git.ee.ethz.ch
 ```
@@ -106,7 +102,7 @@ docker login registry.git.ee.ethz.ch
 git clone git@git.ee.ethz.ch:pbl/research/event-camera/docker/MetavisionSDK-docker.git
 cd MetavisionSDK-docker
 
-# Copy you rmetavison.list to the root of the 
+# Copy you rmetavison.list to the root of the
 cp ~/Downloads/metavision.list metavision22.list
 
 # Build the base docker container
