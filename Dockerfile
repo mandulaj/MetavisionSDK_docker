@@ -14,3 +14,5 @@ RUN groupadd -g ${GROUP_ID} ${USERNAME} && useradd -u ${USER_ID} -g ${GROUP_ID} 
 
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
+
+CMD /bin/bash -c "metavision_studio; while /usr/bin/pgrep metavision >/dev/null; do sleep 1; done"

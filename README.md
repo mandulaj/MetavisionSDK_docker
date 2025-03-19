@@ -57,9 +57,8 @@ docker compose build metavisionsdk
 ```
 
 
-
-
 ## Usage
+
 
 Strat Metavision Studio with:
 ```bash
@@ -82,6 +81,18 @@ docker run -it --privileged -e DISPLAY -v /dev/bus/usb:/deb/bus/usb -v /tmp/.X11
 # Run a Bash in the container
 docker run -it --privileged -e DISPLAY -v /dev/bus/usb:/deb/bus/usb -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /home/${USER}/.Xauthority:/home/${USER}/.Xauthority -v $(pwd):/home/${USER}/pwd --rm --ipc=host --net=host metavisionsdk22_${USER}:latest bash
 ```
+
+## Errors
+If you get error related to some Authorization:
+```
+Authorization required, but no authorization protocol specified
+```
+
+Run this:
+```bash
+xhost +local:docker
+```
+
 
 ### Using USB cameras
 
